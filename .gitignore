@@ -1,0 +1,34 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor files
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Test files
+test-files/
+
+# Temporary files
+*.tmp
+*.bak
+*.old
+*.orig
+*.swp
+*.swo
+
+# Build artifacts
+*.log
+*.aux
+*.pdf
+*.dvi
+
+# Docker
+.dockerenv
+
+# Claude AI files
+.claude/
+CLAUDE.md
