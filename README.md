@@ -47,6 +47,21 @@ A comprehensive Docker image for converting Markdown, LaTeX, and other document 
 
 ## Advanced Usage
 
+### Bundled Enigmata template
+
+The image ships the shared Enigmata SDK template at
+`/opt/enigmata/enigmata-xelatex.tex`, so consumers reference one canonical
+template instead of vendoring their own copy:
+
+```sh
+pandoc SDK.md -o out.pdf --pdf-engine=xelatex \
+  --template=/opt/enigmata/enigmata-xelatex.tex \
+  --metadata-file=metadata.yaml --metadata=copyrightyear:"$(date +%Y)"
+```
+
+The footer organization is taken from the `organization` metadata variable
+(falling back to "Enigmata, Inc."), so the same template serves every SDK.
+
 ### Custom LaTeX templates
 
 Create a custom template with professional typography:

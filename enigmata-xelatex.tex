@@ -1,0 +1,263 @@
+\documentclass[11pt,a4paper]{article}
+
+% Package imports
+\usepackage[left=1in,right=1in,top=1.5in,bottom=1in]{geometry}
+\usepackage{graphicx}
+\usepackage{fancyhdr}
+\usepackage[dvipsnames,svgnames,x11names,table]{xcolor}
+\usepackage{tikz}
+\usepackage{microtype}
+
+% XeLaTeX font setup for modern sans serif
+\usepackage{fontspec}
+\defaultfontfeatures{Ligatures=TeX}
+
+% Try to use SF Pro, fall back to Helvetica Neue, then system sans
+\IfFontExistsTF{SF Pro Display}{
+  \setsansfont{SF Pro Display}[
+    BoldFont = SF Pro Display Bold,
+    ItalicFont = SF Pro Display Italic,
+    BoldItalicFont = SF Pro Display Bold Italic
+  ]
+}{
+  \IfFontExistsTF{Helvetica Neue}{
+    \setsansfont{Helvetica Neue}
+  }{
+    \setsansfont{TeX Gyre Heros} % Fallback
+  }
+}
+
+% Use SF Mono or Menlo for code
+\IfFontExistsTF{SF Mono}{
+  \setmonofont{SF Mono}[Scale=0.9]
+}{
+  \IfFontExistsTF{DejaVu Sans Mono}{
+    \setmonofont{DejaVu Sans Mono}[Scale=0.9]
+  }{
+    \setmonofont{TeX Gyre Cursor}[Scale=0.9] % Fallback
+  }
+}
+
+\renewcommand{\familydefault}{\sfdefault}
+
+% Code handling
+\usepackage{listings}
+\usepackage{fancyvrb}
+\usepackage{framed}
+\usepackage[framemethod=tikz]{mdframed}
+\usepackage{longtable,booktabs,array}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{etoolbox}
+\usepackage{calc}
+\usepackage[unicode=true,
+            colorlinks=true,
+            linkcolor=NavyBlue,
+            citecolor=NavyBlue,
+            urlcolor=NavyBlue,
+            breaklinks=true]{hyperref}
+
+% Custom colors
+\definecolor{brandblue}{RGB}{23,91,236}
+\definecolor{brandgray}{RGB}{100,100,100}
+\definecolor{shadecolor}{RGB}{248,248,248}
+\definecolor{codecomment}{RGB}{0,128,0}
+\definecolor{codekeyword}{RGB}{0,0,255}
+\definecolor{codestring}{RGB}{163,21,21}
+
+% Listings configuration
+\lstdefinestyle{codestyle}{
+  basicstyle=\footnotesize\ttfamily,
+  backgroundcolor=\color{shadecolor},
+  commentstyle=\color{codecomment}\itshape,
+  keywordstyle=\color{codekeyword}\bfseries,
+  stringstyle=\color{codestring},
+  numberstyle=\tiny\color{brandgray},
+  frame=single,
+  frameround=tttt,
+  framexleftmargin=3pt,
+  framesep=3pt,
+  rulecolor=\color{brandblue!30},
+  breaklines=true,
+  breakatwhitespace=true,
+  columns=flexible,
+  keepspaces=true,
+  showstringspaces=false,
+  showtabs=false,
+  tabsize=2,
+  numbers=left,
+  numbersep=8pt,
+  stepnumber=1,
+  escapeinside={(*@}{@*)},
+  extendedchars=true
+}
+
+\lstset{style=codestyle}
+
+% Pandoc requirements
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\passthrough}[1]{#1}
+% Pandoc syntax highlighting
+\DefineVerbatimEnvironment{Highlighting}{Verbatim}{commandchars=\\\{\}}
+\usepackage{newunicodechar}
+\newunicodechar{⬅}{\textleftarrow}
+\newunicodechar{⇒}{\textRightarrow}
+\newcommand{\AlertTok}[1]{\textcolor[rgb]{0.94,0.16,0.16}{\textbf{#1}}}
+\newcommand{\AnnotationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\AttributeTok}[1]{\textcolor[rgb]{0.77,0.63,0.00}{#1}}
+\newcommand{\BaseNTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\BuiltInTok}[1]{#1}
+\newcommand{\CharTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\CommentTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\CommentVarTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ConstantTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ControlFlowTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\DataTypeTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{#1}}
+\newcommand{\DecValTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\DocumentationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\ErrorTok}[1]{\textcolor[rgb]{0.64,0.00,0.00}{\textbf{#1}}}
+\newcommand{\ExtensionTok}[1]{#1}
+\newcommand{\FloatTok}[1]{\textcolor[rgb]{0.00,0.00,0.81}{#1}}
+\newcommand{\FunctionTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\ImportTok}[1]{#1}
+\newcommand{\InformationTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+\newcommand{\KeywordTok}[1]{\textcolor[rgb]{0.13,0.29,0.53}{\textbf{#1}}}
+\newcommand{\NormalTok}[1]{#1}
+\newcommand{\OperatorTok}[1]{\textcolor[rgb]{0.81,0.36,0.00}{\textbf{#1}}}
+\newcommand{\OtherTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{#1}}
+\newcommand{\PreprocessorTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textit{#1}}}
+\newcommand{\RegionMarkerTok}[1]{#1}
+\newcommand{\SpecialCharTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\SpecialStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\StringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\VariableTok}[1]{\textcolor[rgb]{0.00,0.00,0.00}{#1}}
+\newcommand{\VerbatimStringTok}[1]{\textcolor[rgb]{0.31,0.60,0.02}{#1}}
+\newcommand{\WarningTok}[1]{\textcolor[rgb]{0.56,0.35,0.01}{\textbf{\textit{#1}}}}
+
+% Shaded environment
+\newenvironment{Shaded}{
+  \begin{mdframed}[
+    backgroundcolor=shadecolor,
+    linecolor=brandblue!30,
+    linewidth=0.5pt,
+    roundcorner=3pt,
+    skipabove=0.5em,
+    skipbelow=0.5em,
+    innertopmargin=0.5em,
+    innerbottommargin=0.5em,
+    innerleftmargin=1em,
+    innerrightmargin=1em
+  ]
+}{\end{mdframed}}
+
+% Header and footer setup
+\pagestyle{fancy}
+\fancyhf{}
+
+% Header
+\fancyhead[L]{
+  \raisebox{-0.2\height}{\includegraphics[height=0.8cm]{$logo$}}
+}
+\fancyhead[C]{
+  $if(title)$
+  \textcolor{brandgray}{\small\textbf{$title$}}
+  $endif$
+}
+\fancyhead[R]{
+  \textcolor{brandgray}{\small Page \thepage}
+}
+
+% Footer
+\fancyfoot[L]{
+  $if(date)$
+  \textcolor{brandgray}{\small $date$}
+  $endif$
+}
+\fancyfoot[C]{
+  \textcolor{brandgray}{\small © $copyrightyear$ $if(organization)$$organization$$else$Enigmata, Inc.$endif$}
+}
+\fancyfoot[R]{
+  $if(confidential)$
+  \textcolor{brandgray}{\small\textbf{CONFIDENTIAL}}
+  $endif$
+}
+
+% Header/footer rules
+\renewcommand{\headrulewidth}{0.5pt}
+\renewcommand{\footrulewidth}{0.5pt}
+\renewcommand{\headrule}{\hbox to\headwidth{\color{brandblue}\leaders\hrule height \headrulewidth\hfill}}
+\renewcommand{\footrule}{\hbox to\headwidth{\color{brandblue}\leaders\hrule height \footrulewidth\hfill}}
+
+% Section formatting
+\titleformat{\section}
+  {\normalfont\Large\bfseries\color{brandblue}}
+  {\thesection}{1em}{}[{\color{brandblue}\titlerule[0.5pt]}]
+\titleformat{\subsection}
+  {\normalfont\large\bfseries\color{brandblue!80}}
+  {\thesubsection}{1em}{}
+\titleformat{\subsubsection}
+  {\normalfont\normalsize\bfseries\color{brandblue!60}}
+  {\thesubsubsection}{1em}{}
+
+% Spacing
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+
+% Table styling
+\renewcommand{\arraystretch}{1.3}
+\arrayrulecolor{brandblue!50}
+
+% List styling
+\setlist[itemize]{topsep=0.5em,itemsep=0.25em,parsep=0.25em}
+\setlist[enumerate]{topsep=0.5em,itemsep=0.25em,parsep=0.25em}
+\setlist[itemize,1]{label=\textcolor{brandblue}{\textbullet}}
+\setlist[itemize,2]{label=\textcolor{brandblue!70}{\normalfont\bfseries \textendash}}
+\setlist[itemize,3]{label=\textcolor{brandblue!50}{\textgreater}}
+
+\begin{document}
+
+% Title page
+$if(title)$
+\begin{titlepage}
+  \centering
+  \vspace*{2cm}
+
+  % Logo at top
+  \includegraphics[height=2cm]{$logo$}\\[1cm]
+
+  % Title
+  {\Huge\bfseries\color{brandblue} $title$}\\[0.5cm]
+
+  % Decorative line
+  {\color{brandblue}\rule{0.5\textwidth}{1pt}}\\[0.5cm]
+
+  % Subtitle
+  $if(subtitle)$
+  {\Large $subtitle$}\\[1cm]
+  $endif$
+
+  \vfill
+
+  % Author and date
+  $if(author)$
+  {\large\textbf{$author$}}\\[0.5cm]
+  $endif$
+  $if(date)$
+  {\large $date$}
+  $endif$
+
+  \vspace{2cm}
+\end{titlepage}
+$endif$
+
+% Table of contents
+$if(toc)$
+\newpage
+\tableofcontents
+\newpage
+$endif$
+
+$body$
+
+\end{document}

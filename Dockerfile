@@ -32,6 +32,11 @@ RUN wget https://github.com/jgm/pandoc/releases/download/3.1.11/pandoc-3.1.11-1-
     && dpkg -i pandoc-3.1.11-1-amd64.deb \
     && rm pandoc-3.1.11-1-amd64.deb
 
+# Bake the shared Enigmata PDF template into the image so every SDK repo
+# references one canonical template (org name is supplied per-repo via the
+# pandoc `organization` metadata variable) instead of vendoring its own copy.
+COPY enigmata-xelatex.tex /opt/enigmata/enigmata-xelatex.tex
+
 # Create working directory
 WORKDIR /documents
 
