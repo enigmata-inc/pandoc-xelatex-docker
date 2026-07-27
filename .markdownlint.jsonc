@@ -1,0 +1,19 @@
+{
+  // Shared markdownlint settings for the Enigmata estate.
+  "default": true,
+
+  // Prose here is authored one paragraph per line so that editing a sentence
+  // produces a one-line diff. Enforcing a wrap column would rewrap whole
+  // paragraphs on every word change, which makes review harder, not easier.
+  "MD013": false,
+
+  // Off deliberately. Issue and decision references (#20, #116/#130) legitimately
+  // start wrapped lines in our design docs, and MD018's autofix rewrites them
+  // into <h1> headings, silently changing rendered output.
+  "MD018": false,
+
+  "MD004": { "style": "dash" },
+  "MD024": { "siblings_only": true },
+  "MD060": { "style": "leading_and_trailing" },
+  "MD033": false
+}
