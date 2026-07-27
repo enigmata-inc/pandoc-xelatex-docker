@@ -1,0 +1,57 @@
+# Dependabot: security updates and scheduled version updates.
+#
+# Grouping is the point here. Each ecosystem declares one `security-updates`
+# group matching every package, so an advisory backlog arrives as a single
+# reviewable PR instead of one PR per vulnerable package. Routine minor/patch
+# drift rolls up the same way, once a week. MAJORS are deliberately left
+# ungrouped so each lands as its own PR with its own migration and its own CI run.
+#
+# Generated from the manifests actually present in this repo: one entry per
+# lockfile, so workspace roots are listed and their members are not.
+
+version: 2
+
+updates:
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: America/Toronto
+    open-pull-requests-limit: 10
+    labels: ["dependencies", "github-actions"]
+    commit-message:
+      prefix: chore
+      include: scope
+    groups:
+      actions-security:
+        applies-to: security-updates
+        patterns: ["*"]
+      actions-minor-patch:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
+
+  - package-ecosystem: docker
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: America/Toronto
+    open-pull-requests-limit: 10
+    labels: ["dependencies", "docker"]
+    commit-message:
+      prefix: chore
+      include: scope
+    cooldown:
+      default-days: 3
+    groups:
+      docker-security:
+        applies-to: security-updates
+        patterns: ["*"]
+      docker-minor-patch:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: ["minor", "patch"]
