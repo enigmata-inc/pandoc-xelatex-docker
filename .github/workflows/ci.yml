@@ -4,6 +4,11 @@ on:
   pull_request:
     branches: [main]
 
+# We cancel a pull request's superseded run (a newer push to it started one) because it only spends Actions minutes; any other event gets its own group (its run id), so push, tag, schedule and dispatch runs are never queued, replaced or cancelled. Reopens if a pull-request run gains a side effect a cancel could cut short.
+concurrency:
+  group: ${{ github.workflow }}-${{ startsWith(github.event_name, 'pull_request') && github.event.pull_request.number || github.run_id }}
+  cancel-in-progress: ${{ startsWith(github.event_name, 'pull_request') }}
+
 jobs:
   build:
     runs-on: ubuntu-latest
