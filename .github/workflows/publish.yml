@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 45
     permissions:
       contents: read
-      packages: write
+      packages: write # write: pushes the pandoc-xelatex image to GHCR
     steps:
       - name: Checkout
         uses: actions/checkout@v7
