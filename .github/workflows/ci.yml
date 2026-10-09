@@ -19,6 +19,15 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
 
+      # Every workflow here declares its GITHUB_TOKEN permissions, never read-all or
+      # write-all, with write only on the job that needs it and a reason beside each
+      # write, writes no value someone else chose inside a script, and every job that
+      # reads a secret is listed for it in .github/secret-readers.yml. The rules live
+      # once in platform (the action's README says why each holds); the full-sha pin
+      # makes a rule change a reviewed bump here.
+      - name: Workflow token permissions
+        uses: enigmata-inc/platform/.github/actions/workflow-permissions@3f15a692602a4d18dcc50b45544fb38758fac961 # workflow-permissions-v2.0.0
+
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v4
 
