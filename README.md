@@ -20,15 +20,15 @@ A comprehensive Docker image for converting Markdown, LaTeX, and other document 
 
 ### TeX Packages
 
-- `texlive-xetex` - XeLaTeX engine
-- `texlive-latex-base` - Core LaTeX
-- `texlive-latex-extra` - Additional LaTeX packages
-- `texlive-latex-recommended` - Recommended packages
-- `texlive-fonts-recommended` - Standard fonts
-- `texlive-fonts-extra` - Additional fonts
-- `texlive-lang-english` - English language support
-- `texlive-pictures` - TikZ/PGF support
-- `texlive-science` - Math and science packages
+- `texlive-xetex`: XeLaTeX engine
+- `texlive-latex-base`: Core LaTeX
+- `texlive-latex-extra`: Additional LaTeX packages
+- `texlive-latex-recommended`: Recommended packages
+- `texlive-fonts-recommended`: Standard fonts
+- `texlive-fonts-extra`: Additional fonts
+- `texlive-lang-english`: English language support
+- `texlive-pictures`: TikZ/PGF support
+- `texlive-science`: Math and science packages
 
 ### Fonts
 
@@ -41,7 +41,7 @@ A comprehensive Docker image for converting Markdown, LaTeX, and other document 
 
 ### Tools
 
-- Pandoc 3.1.11 (latest version)
+- Pandoc 3.1.11 (pinned in the `Dockerfile`)
 - ImageMagick (for image conversion)
 - librsvg2 (for SVG support)
 
@@ -93,7 +93,7 @@ The image includes professional-quality fonts:
 
 ## Environment Variables
 
-- `DEBIAN_FRONTEND=noninteractive` - Prevents interactive prompts during package installation
+- `DEBIAN_FRONTEND=noninteractive`: Prevents interactive prompts during package installation
 
 ## Contributing
 
@@ -101,10 +101,10 @@ Contributions are welcome! Please feel free to submit a Pull Request.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License; see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Built on Ubuntu 22.04 LTS for stability
+- Built on Ubuntu 26.04
 - Uses the official Pandoc releases
 - Incorporates the comprehensive TeX Live distribution
